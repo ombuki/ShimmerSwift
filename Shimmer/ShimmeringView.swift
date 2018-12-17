@@ -39,17 +39,17 @@ final public class ShimmeringView: UIView {
     }
 
     /// The content view to be shimmered
-    public var contentView = UIView() {
+    @IBOutlet public var contentView : UIView? {
         didSet {
             if oldValue != contentView {
-                addSubview(contentView)
-                shimmerLayer?.contentLayer = contentView.layer
+                addSubview(contentView!)
+                shimmerLayer?.contentLayer = contentView!.layer
             }
         }
     }
 
     /// Set to `true` to start shimmer animation, and `false` to stop. Detaults to `false`.
-    public var isShimmering: Bool = false {
+    @IBInspectable public var isShimmering: Bool = false {
         didSet { shimmerLayer?.isShimmering = isShimmering }
     }
 
@@ -107,8 +107,10 @@ final public class ShimmeringView: UIView {
     }
 
     override public func layoutSubviews() {
-        contentView.bounds = self.bounds
-        contentView.center = self.center
+        if let contentView = contentView {
+            contentView.bounds = self.bounds
+            contentView.center = self.center
+        }
         super.layoutSubviews()
     }
 
